@@ -180,44 +180,42 @@ void RenduOpenGL::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-    if(m_ville)
-        if(m_ville->generee())
-        {
-            glViewport(0, 0, this->width(), this->height());
+    if(! m_ville) {
+        qDebug() << "Pas de ville pour moi!";
+    } else if(! m_ville->generee()) {
+        qDebug() << "Ville en generation";
+    } else {
+        glViewport(0, 0, this->width(), this->height());
 
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluPerspective(70, 1.0*this->width()/this->height(), 0.01, m_optionsDeJeu->performance.farPlane);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        m_ville->drawGL();
+
+        if(m_modeCarte != AUCUNE_CARTE)
+        {
+            double x,y,w,h;
+            if(m_modeCarte == PETITE)
+                x = 20, y = 20, w = 300, h = 300;
+            else
+                x = 20, y = 20, w = this->width() - 40, h = this->height() - 40;
+
+            glViewport(x, y, w, h);
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
-            gluPerspective(70, 1.0*this->width()/this->height(), 0.01, m_optionsDeJeu->performance.farPlane);
+            gluOrtho2D(0, w, 0, h);
 
             glMatrixMode(GL_MODELVIEW);
             glLoadIdentity();
-            m_ville->drawGL();
-
-            if(m_modeCarte != AUCUNE_CARTE)
-            {
-                double x,y,w,h;
-                if(m_modeCarte == PETITE)
-                    x = 20, y = 20, w = 300, h = 300;
-                else
-                    x = 20, y = 20, w = this->width() - 40, h = this->height() - 40;
-
-                glViewport(x, y, w, h);
-                glMatrixMode(GL_PROJECTION);
-                glLoadIdentity();
-                gluOrtho2D(0, w, 0, h);
-
-                glMatrixMode(GL_MODELVIEW);
-                glLoadIdentity();
-                glTranslated(w/2, h/2, 0); //pixels on the screen
-                glScaled(15,15,15); //pixels / unite
-                //Dessiner ici le cadre en 0,0,300,300
-                m_ville->drawMiniCarte();
-            }
+            glTranslated(w/2, h/2, 0); //pixels on the screen
+            glScaled(15,15,15); //pixels / unite
+            //Dessiner ici le cadre en 0,0,300,300
+            m_ville->drawMiniCarte();
         }
-        else
-            qDebug() << "Ville en generation";
-    else
-        qDebug() << "Pas de ville pour moi!";
+    }
 }
 
 void RenduOpenGL::mousePressEvent(QMouseEvent *)

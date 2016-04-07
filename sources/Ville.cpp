@@ -591,9 +591,16 @@ void Ville::remplirSommetsTerrain(VertexArray & sommets)
 void Ville::drawGL()
 {
     static clock_t leTemps = clock();
-    double realFPS = 1.0 / (double(clock() - leTemps) / CLOCKS_PER_SEC);
-    leTemps = clock();
-    qDebug() << "FPS: expected:" << Parametres::FPS << "real:" << realFPS << "diff:" << Parametres::FPS - realFPS;
+
+    clock_t tempsMtn = clock();
+    double realFPS = (double) CLOCKS_PER_SEC / (double)(tempsMtn - leTemps);
+    leTemps = tempsMtn;
+
+    if(realFPS < Parametres::FPS) {
+        qDebug() << "FPS drop ! expected:" << Parametres::FPS << "real:" << (int)realFPS << "percent:" << (int)(100 * (realFPS / Parametres::FPS));
+    } else {
+        qDebug() << "FPS nice : expected:" << Parametres::FPS << "real:" << (int)realFPS << "percent:" << (int)(100 * (Parametres::FPS / realFPS));
+    }
 
     m_camera->glLook();
 
@@ -667,9 +674,9 @@ void Ville::drawMiniCarte()
     { Repere r; r.translate((m_mustang->position - m_perso->position).toVector2D()).rotate(m_mustang->angle, Repere::Z);
         m_indicateurMustang.dessiner();
     }
-    for(size_t i = 0 ; i < m_voituresPNJ.size(); i++)
+    for(VoiturePNJ* voiture : m_voituresPNJ)
     {
-        Repere r; r.translate((m_voituresPNJ[i]->position - m_perso->position).toVector2D()).rotate(m_voituresPNJ[i]->angle, Repere::Z);
+        Repere r; r.translate((voiture->position - m_perso->position).toVector2D()).rotate(voiture->angle, Repere::Z);
         m_indicateurVoiture.dessiner();
     }
 

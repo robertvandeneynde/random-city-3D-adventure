@@ -1,0 +1,3 @@
+*.pro.user*
+Ressources/*.obj.log
+bin/
