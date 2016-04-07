@@ -86,11 +86,9 @@ void Chargement::paintEvent(QPaintEvent *)
         p.drawStaticText(350, 250 - i *25, texte);
     }*/
 
-    for( ; derniersMessages < m_messages.size() ; derniersMessages++)
-    {
-        QLabel * label = new QLabel(m_messages[derniersMessages]);
-        layoutLog->addWidget(label);
-    }
+    for( ; derniersMessages < (int) m_messages.size() ; derniersMessages++)
+        layoutLog->addWidget(new QLabel(m_messages[derniersMessages]));
+
     p.end();
 }
 void Chargement::finDeChargement()

@@ -89,6 +89,8 @@ LIBS += -lGL -lGLU
 
 CONFIG += c++11
 
+QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-reorder
+
 # QMAKE_CXXFLAGS += -std=c++0x
 # QMAKE_CXXFLAGS += -std=gnu++0x
 # CXXFLAGS="-std=c++0x" ./configure #For Qt

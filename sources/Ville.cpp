@@ -240,7 +240,7 @@ void Ville::generer()
 
     //Positionnement de l'helico
     {
-        m_helico->position = QVector3D(1,1,20);
+        m_helico->position = {1,1,20};
         m_helico->angle = Math::enRadians(rand() % 360);
 
         for(int n = 0; n < 10 ; n++)
@@ -539,8 +539,9 @@ void Ville::setHauteurBase(int x, int y, double h)
 void Ville::enterFrame()
 {
     // qDebug() << "--- Nouveau frame ---";
-    for(ObjetScene* objet : m_objetsScene)
-    objet->enterFrame();
+    auto m_objetsSceneCopy = m_objetsScene; // because it may delete
+    for(ObjetScene* objet : m_objetsSceneCopy)
+        objet->enterFrame();
 
     for(Carrefour* c : m_carrefours)
         c->observerVoitures();
