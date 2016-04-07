@@ -1,0 +1,14 @@
+-----------------------------------
+||Ressources/mustang.obj bien cree :
+|-TireBR_Plane->582sommets(40.9 Ko)
+|-AxisBack_Cylinder->384sommets(27 Ko)
+|-Cube_Cube.001->4206sommets(296 Ko)
+|-AxisUnder_Cylinder.002->384sommets(27 Ko)
+|-TireFR_Plane.001->582sommets(40.9 Ko)
+|-AxisFront_Cylinder.001->384sommets(27 Ko)
+|-Car_Cube->10296sommets(724 Ko)
+|-Cube.001_Cube.002->4206sommets(296 Ko)
+|-TireFL_Plane.003->582sommets(40.9 Ko)
+|-Text->603sommets(42.4 Ko)
+|-TireBL_Plane.002->582sommets(40.9 Ko)
+|>11objets ont ete creespour un total de 22791sommets(1.56 Mo)
