@@ -63,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent)
             connect(cible, SIGNAL(couleurChangee(QColor)), this, SLOT(mettreAJourCouleur(QColor)));
         }
     }
+
+    ui->boutonGenerer->click();
 }
 
 void MainWindow::mettreAJourCouleur(QColor couleur)

@@ -293,3 +293,24 @@ bool Bloc::AttributionCouleurs::attribue(ListeChaineeStd<Batiment*>::Iterateur a
     couleur(batiment) = INDEFINI;
     return false;
 }
+
+Batiment* Bloc::findHighestBuilding() {
+    bool found = false;
+    double h;
+    Batiment* b;
+
+    for(Batiment* batiment : m_batiments) {
+        if(!found || h < batiment->hauteurAbsolue()) {
+            h = batiment->hauteurAbsolue();
+            b = batiment;
+        } else {
+
+        }
+        found = true;
+    }
+
+    if(found)
+        return b;
+    else
+        return nullptr; // TODO Exception
+}

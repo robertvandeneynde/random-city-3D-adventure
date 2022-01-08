@@ -28,23 +28,23 @@ Helico::Helico(Ville * ville, Chargement * chargement)
 
     m_helices[0].donnees = m_monObj.enleverAffichage("RotorPrincipal");
     m_helices[1].donnees = m_monObj.enleverAffichage("AntiRotor");
-    m_helices[0].coord = QVector3D(1.800, 0.000, 2.800);
-    m_helices[1].coord = QVector3D(8.636, -0.800, 1.160);
-    m_helices[0].axeRotation = QVector3D(0,0,1);
-    m_helices[1].axeRotation = QVector3D(0,-1,0);
+    m_helices[0].coord = {1.800, 0.000, 2.800};
+    m_helices[1].coord = {8.636, -0.800, 1.160};
+    m_helices[0].axeRotation = {0,0,1};
+    m_helices[1].axeRotation = {0,-1,0};
 
     for(int i = 0 ; i < 2; i++)
         m_helices[i].translater();
 	
 	// hélice
-    for(double i = -7; i < 6.9; i+= 7/2.0)
-           for(double j = -7; j < 6.9; j+= 7/2.0)
-               m_heliceCoord.push_back(QVector3D(i, j, 2.8));
+    for(float i = -7; i < 6.9; i+= 7/2.0)
+           for(float j = -7; j < 6.9; j+= 7/2.0)
+               m_heliceCoord.push_back({i, j, 2.8f});
 
     // base
-    for(double i = -1; i < 0.9; i+= 0.5)
-           for(double j = -3.3; j < 1.2; j+= 4.6/4.0)
-               m_baseCoord.push_back(QVector3D(-j, i, -1.5));
+    for(float i = -1; i < 0.9; i+= 0.5)
+           for(float j = -3.3; j < 1.2; j+= 4.6/4.0)
+               m_baseCoord.push_back({-j, i, -1.5f});
 }
 Helico::~Helico()
 {

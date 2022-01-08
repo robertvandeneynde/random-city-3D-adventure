@@ -1,11 +1,16 @@
 #ifndef LONGUEST_RACE_H
 #define LONGUEST_RACE_H
 
+#include "../objectif.h"
 
-class longuest_race
+namespace objectifs {
+
+class longuest_race : public Objectif
 {
 public:
-    longuest_race();
+    void setVille(Ville* v) override;
 };
+
+}
 
 #endif // LONGUEST_RACE_H

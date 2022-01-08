@@ -49,12 +49,23 @@ Ville::Ville(Parametres const& params, Chargement * chargement)
     connect(m_threadGeneration, SIGNAL(finished()), this, SLOT(finDeThread()));
     m_threadGeneration->start();
 }
+
+#include "objectifs/longuest_race.h"
+#include "objectifs/stay_high.h"
+
 void Ville::finDeThread()
 {
     delete m_threadGeneration;
     m_threadGeneration = nullptr;
     m_ecranChargement = nullptr;
     emit generated();
+
+    m_objectifs = {
+        std::shared_ptr<Objectif>(new objectifs::longuest_race()),
+        std::shared_ptr<Objectif>(new objectifs::stay_high()),
+    };
+    for(auto objectif : m_objectifs)
+        objectif->setVille(this);
 }
 void ThreadGenerationVille::run()
 {
@@ -538,7 +549,9 @@ void Ville::setHauteurBase(int x, int y, double h)
 
 void Ville::enterFrame()
 {
-    // qDebug() << "--- Nouveau frame ---";
+    //qDebug() << "--- Nouveau frame ---";
+    qDebug() << QString("xyz = (%1, %2, %3)").arg(m_perso->position3D().x()).arg(m_perso->position3D().y()).arg(m_perso->position3D().z());
+
     auto m_objetsSceneCopy = m_objetsScene; // because it may delete
     for(ObjetScene* objet : m_objetsSceneCopy)
         objet->enterFrame();
@@ -902,4 +915,15 @@ void Ville::afficher(QTextStream & out)
             out << m_elements[x][y]->caractereMap();
         out << endl;
     }
+}
+
+// Objectifs
+Batiment* Ville::findHighestBuilding(){
+    Batiment* max_b = nullptr;
+    for(ListeChaineeStd<Bloc*>::Iterateur it = m_blocs.premier(); it.valide(); ++it) {
+        Batiment* b = (*it)->findHighestBuilding();
+        if(!max_b || (b && b->hauteurAbsolue() > max_b->hauteurAbsolue()))
+            max_b = b;
+    }
+    return max_b;
 }

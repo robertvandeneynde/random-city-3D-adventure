@@ -135,7 +135,8 @@ void Perso::dynamique()
 		Element* elem = m_ville->at( position.toPointF() );
 		if(Batiment* bat = dynamic_cast<Batiment*>(elem))
 		{
-			bat->setCouleur(QColor(255, 200, 0));
+            emit m_ville->batimentSteppedOn(bat);
+            bat->setCouleur(QColor(255, 200, 0));
 		}
 	}
     m_oscCamera.valeurCible = angle;

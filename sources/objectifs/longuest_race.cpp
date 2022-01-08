@@ -1,6 +1,10 @@
 #include "longuest_race.h"
 
-longuest_race::longuest_race()
+namespace objectifs {
+
+void longuest_race::setVille(Ville*)
 {
+
+}
 
 }

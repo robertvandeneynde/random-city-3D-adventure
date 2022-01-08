@@ -1,11 +1,19 @@
 #ifndef STAY_HIGH_H
 #define STAY_HIGH_H
 
+#include "../objectif.h"
 
-class stay_high
+#include <QObject>
+
+namespace objectifs {
+
+class stay_high : public Objectif //, public QObject
 {
+    //Q_OBJECT
 public:
-    stay_high();
+    void setVille(Ville*) override;
 };
+
+}
 
 #endif // STAY_HIGH_H

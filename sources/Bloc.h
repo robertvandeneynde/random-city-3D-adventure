@@ -74,6 +74,10 @@ class Bloc
         double m_hauteurSol;
 
         QList<QFile*> m_listeDeFichiersLog;
+
+    // Objectifs
+   public:
+        Batiment* findHighestBuilding();
 };
 
 #endif // BLOC_H

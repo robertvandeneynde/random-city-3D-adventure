@@ -41,9 +41,6 @@ protected :
 protected :
     Zone m_zone;
     double m_hauteur, m_hauteurMin;
-
-    static void remplirSommetsDroit(VertexArray & sommets, StructZone zone, double hauteurMin, double hauteur);
-    static void remplirSommetsPenche(VertexArray & sommets, Zone zone, double hauteur);
 };
 
 /////////////////////
@@ -81,6 +78,8 @@ public:
     // Element
     void remplir(RemplisseurDeScene & remplisseur);
     QChar caractereMap();
+
+    double hauteurAbsolue() { return m_hauteur + m_hauteurMin; }
 
 private:
     int m_indice;

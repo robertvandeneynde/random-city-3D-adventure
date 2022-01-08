@@ -125,9 +125,10 @@ void Dessinateur::cubeDroit(double x, double dx, double y, double dy, double z, 
 void Dessinateur::cubeDroitTexture(double x, double dx, double y, double dy, double z, double dz, GLuint texture, QColor couleur)
 {
     sommets.setCurrentTexture(texture);
-    for(int i = 0; i < 6; ++i)
+    for(int i = 0; i < 6; ++i) {
         for(int j = 0; j < 4; ++j)
             sommets.nouvelleTexCoord((j == 0 || j == 1) * dx, (j == 0 || j == 3) * dy);
+    }
 	return cubeDroit(x, dx, y, dy, z, dz, couleur);
 }
 

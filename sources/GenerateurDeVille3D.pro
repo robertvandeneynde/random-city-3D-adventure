@@ -44,7 +44,10 @@ SOURCES += main.cpp\
     ObjetScene.cpp \
     SousVille.cpp \
     Zone.cpp \
-    BoulePeinture.cpp
+    BoulePeinture.cpp \
+    objectif.cpp \
+    objectifs/longuest_race.cpp \
+    objectifs/stay_high.cpp
 
 HEADERS  += MainWindow.h \
     RenduOpenGL.h \
@@ -83,7 +86,10 @@ HEADERS  += MainWindow.h \
     ObjetScene.h \
     SousVille.h \
     Zone.h \
-    BoulePeinture.h
+    BoulePeinture.h \
+    objectif.h \
+    objectifs/longuest_race.h \
+    objectifs/stay_high.h
 
 LIBS += -lGL -lGLU
 

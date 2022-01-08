@@ -1,4 +1,4 @@
-#ifndef VILLE_H
+﻿#ifndef VILLE_H
 #define VILLE_H
 
 #include <cstdlib>
@@ -34,6 +34,8 @@
 #include "VilleInterface.h"
 #include "SousVille.h"
 
+#include "objectif.h"
+
 class Element;
 class Bloc;
 class Route;
@@ -49,6 +51,9 @@ class GPS;
 
 class ThreadGenerationVille;
 class Zone;
+
+typedef Batiment Building;
+
 class Ville : public VilleInterface, public SousVille
 {
         Q_OBJECT
@@ -199,6 +204,16 @@ class Ville : public VilleInterface, public SousVille
         };
 
         AfficheurGPS m_afficheurGPS[2];
+
+        // Objectifs
+        std::vector<std::shared_ptr<Objectif>> m_objectifs;
+
+        // Objectifs
+    public:
+        Batiment* findHighestBuilding();
+
+    signals:
+        void batimentSteppedOn(Batiment*);
 };
 
 class ThreadGenerationVille : public QThread
