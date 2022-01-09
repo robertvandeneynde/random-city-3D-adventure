@@ -21,6 +21,8 @@
 
 #include "Parametres.h"
 
+#include "shadervao.h"
+
 class VilleInterface;
 
 class RenduOpenGL : public QGLWidget
@@ -77,6 +79,8 @@ class RenduOpenGL : public QGLWidget
         ToucheVirtuelle* m_mesTouches[6];
         MapClavier m_keyInput;
         TextureSet m_textureSet;
+
+        ShaderVAO* shader_vao = nullptr;
 };
 
 #endif // RENDUOPENGL_H

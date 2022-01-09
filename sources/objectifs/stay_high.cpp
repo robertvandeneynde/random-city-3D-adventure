@@ -13,9 +13,10 @@ void stay_high::setVille(Ville* ville)
 
     Batiment* highest = ville->findHighestBuilding();
 
-    qDebug() << highest->zone().coin(0,0);
+    qDebug() << QVector3D(QVector2D(highest->zone().coin(0,0)), (float)highest->hauteurAbsolue());
 
     // TODO : add an indicator on top of the highest building
+    //ville->addObjetScene(new Cube());
 
     QObject::connect(ville, &Ville::batimentSteppedOn, [highest](Batiment* building){
         if (building == highest)

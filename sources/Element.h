@@ -184,7 +184,7 @@ class Route : public Element, public RouteOrientation
         void creerCarrefours3AuxBouts();
 
         void creerSousRoutes(); //Va creer des liaisons sur la carte vers les petites routes simples
-        //Accà¨s
+        //Accès
         RouteSimple * routeSimple(size_t i) { return m_sousRoutes[i]; }
         size_t nombreSousRoutes() { return m_sousRoutes.size(); }
 

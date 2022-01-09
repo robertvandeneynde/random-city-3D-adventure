@@ -89,6 +89,7 @@ void RenduOpenGL::initializeGL()
 {
     //Definition de la couleur du fond
     glClearColor(49/255.0, 207/255.0, 240/255.0, 1);
+
     // Augmentation de la qualité du calcul de perspective
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     // Choix du shader
@@ -117,14 +118,15 @@ void RenduOpenGL::initializeGL()
     GLfloat fogcolor[4] = {1, 1, 1, 1};
     glFogfv(GL_FOG_COLOR, fogcolor);
 
-    /*glFogi(GL_FOG_MODE, GL_EXP);
-    glFogf(GL_FOG_DENSITY, 0.10);*/
+    //glFogi(GL_FOG_MODE, GL_EXP);
+    //glFogf(GL_FOG_DENSITY, 0.10);
 
     glFogi(GL_FOG_MODE, GL_LINEAR);
     glFogf(GL_FOG_START, 30);
     glFogf(GL_FOG_END, 60);
 
     m_textureSet.JARDIN = bindTexture(QPixmap("Ressources/herbe.jpg"), GL_TEXTURE_2D);
+    shader_vao = new ShaderVAO();
 }
 
 void RenduOpenGL::onEnterFrame()
@@ -185,6 +187,9 @@ void RenduOpenGL::paintGL()
     } else if(! m_ville->generee()) {
         qDebug() << "Ville en generation";
     } else {
+        /*glViewport(0, 0, this->width(), this->height());
+        shader_vao->dessiner();*/
+
         glViewport(0, 0, this->width(), this->height());
 
         glMatrixMode(GL_PROJECTION);
@@ -204,6 +209,9 @@ void RenduOpenGL::paintGL()
                 x = 20, y = 20, w = this->width() - 40, h = this->height() - 40;
 
             glViewport(x, y, w, h);
+
+            glDisable(GL_LIGHTING);
+
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
             gluOrtho2D(0, w, 0, h);
@@ -214,7 +222,46 @@ void RenduOpenGL::paintGL()
             glScaled(15,15,15); //pixels / unite
             //Dessiner ici le cadre en 0,0,300,300
             m_ville->drawMiniCarte();
+
+            glEnable(GL_LIGHTING);
         }
+
+        /*
+        glDisable(GL_LIGHTING);
+
+        glViewport(0, 0, this->width(), this->height());
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        glBegin(GL_TRIANGLES);
+        glColor3d(0,0,1);
+        glVertex3d(0.7, 0.7, 0.0);
+        glVertex3d(-0.5, 0.7, 0.0);
+        glVertex3d(0.1, -0.5, 0.0);
+        glEnd();
+
+        glEnable(GL_LIGHTING);
+
+        VertexArray va;
+        va.utiliserBuffer();
+        va.nouvelleCouleur(1,0,0);
+        va.nouvelleCouleur(1,0,0);
+        va.nouvelleCouleur(1,0,0);
+        va.nouvellePosition(0.8, 0.8, 0.0);
+        va.nouvellePosition(-0.4, 0.8, 0.0);
+        va.nouvellePosition(0.2, -0.4, 0.0);
+        va.nouvelleNormale(0,0,1);
+        va.nouvelleNormale(0,0,1);
+        va.nouvelleNormale(0,0,1);
+        va.dessiner();
+
+        glViewport(0, 0, this->width(), this->height());
+        shader_vao->dessiner();
+        */
     }
 }
 

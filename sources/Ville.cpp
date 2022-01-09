@@ -27,6 +27,9 @@
 
 #include "DessinateurCarte.h"
 
+#include "objectifs/longuest_race.h"
+#include "objectifs/stay_high.h"
+
 using namespace std;
 
 namespace {
@@ -49,9 +52,6 @@ Ville::Ville(Parametres const& params, Chargement * chargement)
     connect(m_threadGeneration, SIGNAL(finished()), this, SLOT(finDeThread()));
     m_threadGeneration->start();
 }
-
-#include "objectifs/longuest_race.h"
-#include "objectifs/stay_high.h"
 
 void Ville::finDeThread()
 {
@@ -741,7 +741,7 @@ void Ville::remplirSommets()
     {
         (*carr)->remplir(remplisseur);
         (*carr)->remplir(remplisseurCarte);
-     }
+    }
 
     m_sommets.copierSansCouleurs(m_sommetsArretes);
 	remplirSommetsTerrain(m_sommetsTerrain);

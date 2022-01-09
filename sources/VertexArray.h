@@ -160,7 +160,7 @@ private:
     struct InfoTexture
     {
 		InfoTexture(GLuint id_, size_t from_, size_t count_) : id(id_), def(true), from(from_), count(count_) {}
-		InfoTexture(size_t from_, size_t count_) : def(false), from(from_), count(count_) {}
+        InfoTexture(size_t from_, size_t count_) : def(false), from(from_), count(count_) {}
 
         void draw(GLenum modeAffichage);
 

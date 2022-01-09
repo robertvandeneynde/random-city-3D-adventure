@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     BoulePeinture.cpp \
     objectif.cpp \
     objectifs/longuest_race.cpp \
-    objectifs/stay_high.cpp
+    objectifs/stay_high.cpp \
+    shadervao.cpp
 
 HEADERS  += MainWindow.h \
     RenduOpenGL.h \
@@ -89,7 +90,8 @@ HEADERS  += MainWindow.h \
     BoulePeinture.h \
     objectif.h \
     objectifs/longuest_race.h \
-    objectifs/stay_high.h
+    objectifs/stay_high.h \
+    shadervao.h
 
 LIBS += -lGL -lGLU
 
@@ -103,3 +105,8 @@ QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-reorder
 
 FORMS    += MainWindow.ui \
     Chargement.ui
+
+DISTFILES += \
+    ../shaders/base.frag \
+    ../shaders/base.vert
+

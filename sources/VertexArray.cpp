@@ -456,7 +456,7 @@ void VertexArray::noCurrentTexture()
 {
     texturesEquilibrees();
     if(m_textures.back().def)
-		m_textures.push_back( InfoTexture(length(), 0) );
+        m_textures.push_back( InfoTexture(length(), 0) );
 }
 
 void VertexArray::setCurrentTexture(GLuint n)
@@ -500,15 +500,15 @@ void VertexArray::utiliserBuffer(bool val)
 
 void VertexArray::initBuffer()
 {
-	m_buffer.destroy();
-	m_buffer = QGLBuffer();
+    m_buffer.destroy();
+    m_buffer = QGLBuffer();
 
-	m_buffer.create();
-	m_buffer.bind();
+    m_buffer.create();  // calls glGenBuffers
+    m_buffer.bind();    // calls glBindBuffer
 
-    allouerBuffer();
+    allouerBuffer();    // calls glBufferData
 
-	m_buffer.release();
+    m_buffer.release(); // calls glBindBuffer(_, 0)
 }
 
 void VertexArray::copierSansCouleurs(VertexArray &autre)
@@ -532,26 +532,26 @@ void VertexArray::dessiner()
     if(m_utiliserBuffer && !m_buffer.isCreated()) {
         initBuffer();
     }
-	/* fin */
+    /* fin */
 
     glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     if(! m_utiliserBuffer)
         setPointers();
     else
-	{
-		m_buffer.bind();
+    {
+        m_buffer.bind();
         setVBOPointers();
     }
 
-	for(InfoTexture& info : m_textures)
-		info.draw(m_modeAffichage);
+    for(InfoTexture& info : m_textures)
+        info.draw(m_modeAffichage);
 
-	if(m_utiliserBuffer)
-		m_buffer.release();
+    if(m_utiliserBuffer)
+        m_buffer.release();
 
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -561,12 +561,12 @@ void VertexArray::dessiner()
 
 void VertexArray::InfoTexture::draw(GLenum modeAffichage)
 {
-	if(def) {
+    if(def) {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, id);
-	} else {
+    } else {
         glDisable(GL_TEXTURE_2D);
-	}
+    }
     glDrawArrays(modeAffichage, from, count);
 }
 
@@ -594,25 +594,25 @@ void VertexArray::writeBufferPartial(size_t indice, size_t bytes, TypeDonnee typ
 
 void VertexArray::allouerBuffer() const
 {
-	m_buffer.allocate( weight() );
-	size_t w = 0;
-	m_buffer.write(w += 0, &m_pos[0], oct(m_pos));
-	m_buffer.write(w += oct(m_pos), &m_norm[0], oct(m_norm));
-	m_buffer.write(w += oct(m_norm), &m_coul[0], oct(m_coul));
-	m_buffer.write(w += oct(m_coul), &m_texc[0], oct(m_texc));
+    m_buffer.allocate( weight() );
+    size_t w = 0;
+    m_buffer.write(w += 0, &m_pos[0], oct(m_pos));
+    m_buffer.write(w += oct(m_pos), &m_norm[0], oct(m_norm));
+    m_buffer.write(w += oct(m_norm), &m_coul[0], oct(m_coul));
+    m_buffer.write(w += oct(m_coul), &m_texc[0], oct(m_texc));
 }
 
 void VertexArray::setVBOPointers() const
 {
     size_t w = 0;
-    glVertexPointer(V_SIZE, GL_DOUBLE, 0, BUFFER_OFFSET(w));
+    glVertexPointer(V_SIZE, GL_DOUBLE, 0, BUFFER_OFFSET(w));  // GL 1.5, see https://stackoverflow.com/a/21652955
     glNormalPointer(GL_DOUBLE, 0, BUFFER_OFFSET(w += oct(m_pos)));
     glColorPointer(C_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(w += oct(m_norm)));
     glTexCoordPointer(T_SIZE, GL_DOUBLE, 0, BUFFER_OFFSET(w += oct(m_coul)));
 }
 void VertexArray::setPointers() const
 {
-	glVertexPointer(V_SIZE, GL_DOUBLE, 0, &m_pos[0]);
+    glVertexPointer(V_SIZE, GL_DOUBLE, 0, &m_pos[0]);
     glNormalPointer(GL_DOUBLE, 0, &m_norm[0]);
     glColorPointer(C_SIZE, GL_FLOAT, 0, &m_coul[0]);
     glTexCoordPointer(T_SIZE, GL_DOUBLE, 0, &m_texc[0]);
