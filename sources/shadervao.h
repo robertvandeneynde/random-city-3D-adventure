@@ -21,6 +21,8 @@ public:
     QOpenGLShaderProgram prog;
     QOpenGLVertexArrayObject vao;
     QOpenGLBuffer vbo;
+
+    QMatrix4x4 matrice;
 };
 
 #endif // SHADERVAO_H

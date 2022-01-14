@@ -30,6 +30,9 @@
 #include "objectifs/longuest_race.h"
 #include "objectifs/stay_high.h"
 
+#include "shadervao.h"
+#include <QMatrix4x4>
+
 using namespace std;
 
 namespace {
@@ -66,6 +69,7 @@ void Ville::finDeThread()
     };
     for(auto objectif : m_objectifs)
         objectif->setVille(this);
+    m_tallestBuildingShrineVAO = new ShaderVAO();
 }
 void ThreadGenerationVille::run()
 {
@@ -666,8 +670,30 @@ void Ville::drawGL()
     m_afficheurGPS[nMin].setLargeur(10);
     m_afficheurGPS[1-nMin].setLargeur(3);
 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     for(int i = 0 ; i < 2 ; i++)
         m_afficheurGPS[i].dessiner();
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glDisable(GL_CULL_FACE);
+
+    {
+        Building* b = findHighestBuilding();
+
+        QMatrix4x4 p;
+        glGetFloatv(GL_PROJECTION_MATRIX, p.data());
+
+        QMatrix4x4 m;
+        glGetFloatv(GL_MODELVIEW_MATRIX, m.data());
+
+        m_tallestBuildingShrineVAO->matrice = p * m; // QMatrix4x4();
+        m_tallestBuildingShrineVAO->matrice.translate(QVector3D(
+            QVector2D((b->zone().coin(0, 0) + b->zone().coin(1, 1)) / 2),
+            float(1.0f + b->hauteurAbsolue())
+        ));
+        m_tallestBuildingShrineVAO->dessiner();
+    }
 }
 
 void Ville::drawMiniCarte()

@@ -9,8 +9,8 @@ ShaderVAO::ShaderVAO()
 
     float vertices[] = {
         0.6, 0.6, 0.0,
-        -0.6, 0.6, 0.0,
         0.0, -0.6, 0.0,
+        -0.6, 0.6, 0.0,
     };
 
     vbo.create();  // glGenBuffers(...);
@@ -29,6 +29,8 @@ ShaderVAO::ShaderVAO()
     prog.release();
     vao.release();  // glBindVertexArray(0);
     vbo.release();  // glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    matrice.translate({0.5, 0, 0});
 }
 
 // appelle glDrawArrays
@@ -36,8 +38,7 @@ void ShaderVAO::dessiner() {
     prog.bind();  // glUseProgram(shader_program);
     vao.bind();  // glBindVertexArray(vertex_array_object);
 
-    QMatrix4x4 m;
-    //prog.setUniformValue("matrice", m);
+    prog.setUniformValue("matrice", matrice);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
 

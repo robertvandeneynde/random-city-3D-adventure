@@ -200,6 +200,8 @@ void RenduOpenGL::paintGL()
         glLoadIdentity();
         m_ville->drawGL();
 
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
         if(m_modeCarte != AUCUNE_CARTE)
         {
             double x,y,w,h;
@@ -259,7 +261,11 @@ void RenduOpenGL::paintGL()
         va.nouvelleNormale(0,0,1);
         va.dessiner();
 
+        */
+
+        /*
         glViewport(0, 0, this->width(), this->height());
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         shader_vao->dessiner();
         */
     }

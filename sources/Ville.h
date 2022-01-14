@@ -35,6 +35,7 @@
 #include "SousVille.h"
 
 #include "objectif.h"
+#include "shadervao.h"
 
 class Element;
 class Bloc;
@@ -207,6 +208,8 @@ class Ville : public VilleInterface, public SousVille
 
         // Objectifs
         std::vector<std::shared_ptr<Objectif>> m_objectifs;
+
+        ShaderVAO* m_tallestBuildingShrineVAO = nullptr;
 
         // Objectifs
     public:
